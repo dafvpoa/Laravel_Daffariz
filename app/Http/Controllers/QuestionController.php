@@ -27,7 +27,8 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());    
+        //dd($request->all());  
+          
         $data['nama'] = $request->nama;
         $data['email'] = $request->email;
         $data['pertanyaan'] = $request->pertanyaan;
