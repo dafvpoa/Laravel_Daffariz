@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Terima Kasih</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -52,21 +54,29 @@
 <body>
 
     <div class="thankyou-container">
-        <h2>Terima Kasih, {$nama}! 🎉</h2>
-        <p class="lead">Pertanyaan Anda telah berhasil dikirim.</p>
+        <h2>Terima Kasih, {{ $nama }}! 🎉</h2>
+
+        <p class="lead">
+            Pertanyaan Anda telah berhasil dikirim.
+        </p>
 
         <blockquote>
             <strong>Pertanyaan Anda:</strong><br>
-            "{$pertanyaan}"
+            "{{ $pertanyaan }}"
         </blockquote>
 
         <p class="email-info mt-4">
-            Pertanyaan Anda akan segera kami tanggapi dan balas melalui email <strong>{$email}</strong>.<br><br>
+            Pertanyaan Anda akan segera kami tanggapi dan balas melalui email
+            <strong>{{ $email }}</strong>.<br><br>
+
             Mohon cek kotak masuk atau folder spam Anda secara berkala.
         </p>
 
-        <a href="{{ url('/') }}" class="btn btn-primary mt-4">Kembali ke Beranda</a>
+        <a href="{{ url('/') }}" class="btn btn-primary mt-4">
+            Kembali ke Beranda
+        </a>
     </div>
 
 </body>
 </html>
+```
