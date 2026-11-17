@@ -1,100 +1,273 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV {{ $userCv->nama }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>CV {{ $cv->nama }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        body { background-color: #f1f5f9; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .cv-card { max-width: 900px; margin: 40px auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
-        .cv-sidebar { background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%); color: #ffffff; padding: 40px 30px; }
-        .cv-content { padding: 40px; background: #ffffff; }
-        .avatar-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid rgba(255,255,255,0.2); object-fit: cover; }
-        .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #818cf8; margin-bottom: 15px; }
-        .content-title { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #1e293b; margin-bottom: 20px; }
-        .timeline { position: relative; padding-left: 20px; border-left: 2px solid #e2e8f0; }
-        .timeline-item { position: relative; margin-bottom: 25px; }
-        .timeline-dot { position: absolute; left: -26px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background-color: #4f46e5; border: 2px solid #ffffff; }
-        .skill-chip { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); color: #e2e8f0; padding: 5px 12px; border-radius: 8px; font-size: 12px; display: inline-block; margin: 0 4px 6px 0; }
+        @page {
+            size: A4;
+            margin: 12mm;
+        }
+
+        body {
+            background: #eef2f7;
+            font-family: Arial, sans-serif;
+            padding: 35px 15px;
+        }
+
+        .cv-card {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px #0002;
+        }
+
+        .cv-header {
+            background: #123b68;
+            color: white;
+            padding: 32px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .foto, .no-foto {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .foto {
+            object-fit: cover;
+            border: 4px solid white;
+        }
+
+        .no-foto {
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .cv-header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .cv-header p {
+            margin: 0;
+            color: #dbeafe;
+        }
+
+        .cv-content {
+            padding: 30px 35px;
+        }
+
+        .bagian {
+            margin-bottom: 25px;
+        }
+
+        .bagian h3 {
+            color: #123b68;
+            font-size: 19px;
+            font-weight: bold;
+            border-bottom: 2px solid #123b68;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .biodata {
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 12px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .nilai {
+            overflow-wrap: anywhere;
+        }
+
+        .video-cv {
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            max-height: 400px;
+            background: #000;
+            border-radius: 10px;
+        }
+
+        .aksi {
+            max-width: 850px;
+            margin: 20px auto;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 576px) {
+            .cv-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cv-content {
+                padding: 25px 18px;
+            }
+
+            .biodata {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .nilai {
+                margin-bottom: 10px;
+            }
+        }
+
         @media print {
-            .no-print { display: none !important; }
-            body { background: white; }
-            .cv-card { box-shadow: none; border: none; margin: 0; width: 100%; max-width: 100%; }
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cv-card {
+                max-width: 100%;
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
+                overflow: visible;
+            }
+
+            .cv-header {
+                background: #123b68 !important;
+                color: white !important;
+            }
+
+            .aksi, .bagian-video {
+                display: none !important;
+            }
+
+            .bagian {
+                break-inside: avoid;
+            }
         }
     </style>
 </head>
-<body class="py-3">
+<body>
 
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3 no-print" style="max-width: 900px; margin: 0 auto;">
-        <a href="{{ route('cv.index') }}" class="btn btn-outline-secondary rounded-3"><i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard</a>
-        <button class="btn btn-dark rounded-3 px-4" onclick="window.print()"><i class="bi bi-printer me-2"></i> Cetak PDF</button>
-    </div>
+<div class="cv-card">
+    <div class="cv-header">
+        @if ($cv->foto)
+            <img src="{{ asset('storage/' . $cv->foto) }}"
+                 alt="Foto {{ $cv->nama }}"
+                 class="foto">
+        @else
+            <div class="no-foto">Belum ada foto</div>
+        @endif
 
-    <div class="cv-card">
-        <div class="row g-0">
-            <div class="col-lg-4 cv-sidebar">
-                <div class="text-center mb-4">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($userCv->nama) }}&background=6366f1&color=fff&size=150" class="avatar-img mb-3" alt="Foto Profil">
-                    <h4 class="fw-bold text-white mb-1">{{ $userCv->nama }}</h4>
-                    <span class="badge bg-primary bg-opacity-20 text-indigo-200 border border-primary border-opacity-30 rounded-pill px-3 py-2 font-monospace small">
-                        {{ $userCv->posisi }}
-                    </span>
-                </div>
+        <div>
+            <h1>{{ $cv->nama }}</h1>
+            <p>Curriculum Vitae</p>
 
-                <div class="mb-4">
-                    <div class="sidebar-title"><i class="bi bi-person-vcard me-2"></i>Informasi Diri</div>
-                    <div class="small d-flex flex-column gap-3 text-slate-300">
-                        <div><span class="text-muted d-block small">NIM</span><strong class="text-white">{{ $userCv->nim }}</strong></div>
-                        <div><span class="text-muted d-block small">Kelas</span><strong class="text-white">{{ $userCv->kelas }}</strong></div>
-                        <div><span class="text-muted d-block small">Tempat, Tgl Lahir</span><strong class="text-white">{{ $userCv->tempat_lahir }}, {{ date('d M Y', strtotime($userCv->tanggal_lahir)) }}</strong></div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="sidebar-title"><i class="bi bi-tools me-2"></i>Keahlian Utama</div>
-                    <span class="skill-chip">Laravel</span><span class="skill-chip">PHP 8</span><span class="skill-chip">MySQL</span><span class="skill-chip">Bootstrap 5</span>
-                </div>
-            </div>
-
-            <div class="col-lg-8 cv-content">
-                <div class="mb-5">
-                    <div class="content-title"><i class="bi bi-journal-text me-2 text-primary"></i>Ringkasan Profil</div>
-                    <p class="text-secondary small leading-relaxed mb-0">Developer handal yang berfokus pada pengembangan aplikasi web modern dan responsif berbasis Laravel.</p>
-                </div>
-
-                <div class="mb-5">
-                    <div class="content-title"><i class="bi bi-briefcase me-2 text-primary"></i>Pengalaman Kerja</div>
-                    <div class="timeline">
-                        @foreach($riwayatKerja as $p)
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="d-flex justify-content-between align-items-start mb-1">
-                                <h6 class="fw-bold text-dark mb-0" style="font-size: 15px;">{{ $p->posisi }}</h6>
-                                <span class="badge bg-light text-primary border border-primary-subtle rounded-pill px-3 py-1" style="font-size: 11px;">{{ $p->periode }}</span>
-                            </div>
-                            <p class="text-primary fw-medium small mb-1"><i class="bi bi-building me-1"></i>{{ $p->perusahaan }}</p>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div>
-                    <div class="content-title"><i class="bi bi-mortarboard me-2 text-primary"></i>Pendidikan</div>
-                    <div class="bg-light p-3 rounded-3 border-start border-4 border-primary d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="fw-bold text-dark mb-1" style="font-size: 14px;">S1 Teknik Informatika</h6>
-                            <p class="text-muted small mb-0">Perguruan Tinggi / Universitas</p>
-                        </div>
-                        <span class="badge bg-white text-dark border px-3 py-2 rounded-2 fw-medium" style="font-size: 11px;">2021 — Sekarang</span>
-                    </div>
-                </div>
-            </div>
+            @if ($cv->email)
+                <p>{{ $cv->email }}</p>
+            @endif
         </div>
     </div>
+
+    <div class="cv-content">
+        <div class="bagian">
+            <h3>Biodata Pribadi</h3>
+            <div class="biodata">
+                <div class="label">Nama Lengkap</div>
+                <div class="nilai">{{ $cv->nama }}</div>
+
+                <div class="label">Tempat Lahir</div>
+                <div class="nilai">{{ $cv->tempat_lahir ?: '-' }}</div>
+
+                <div class="label">Tanggal Lahir</div>
+                <div class="nilai">
+                    {{ $cv->tanggal_lahir ? \Illuminate\Support\Carbon::parse($cv->tanggal_lahir)->format('d-m-Y') : '-' }}
+                </div>
+
+                <div class="label">Jenis Kelamin</div>
+                <div class="nilai">{{ $cv->jenis_kelamin ?: '-' }}</div>
+
+                <div class="label">Alamat</div>
+                <div class="nilai">{{ $cv->alamat ?: '-' }}</div>
+            </div>
+        </div>
+
+        <div class="bagian">
+            <h3>Pendidikan</h3>
+            <p style="white-space: pre-line;">{{ $cv->pendidikan ?: 'Belum diisi' }}</p>
+        </div>
+
+        <div class="bagian">
+            <h3>Keahlian</h3>
+            <p style="white-space: pre-line;">{{ $cv->keahlian ?: 'Belum diisi' }}</p>
+        </div>
+
+        <div class="bagian">
+            <h3>Kontak</h3>
+            <div class="biodata">
+                <div class="label">Email</div>
+                <div class="nilai">{{ $cv->email ?: '-' }}</div>
+
+                <div class="label">Nomor HP</div>
+                <div class="nilai">{{ $cv->no_hp ?: '-' }}</div>
+            </div>
+        </div>
+
+        <div class="bagian bagian-video">
+            <h3>Video Perkenalan</h3>
+
+            @if ($cv->video)
+                <video class="video-cv" controls preload="metadata">
+                    <source src="{{ asset('storage/' . $cv->video) }}"
+                            type="video/mp4">
+                    Browser kamu tidak mendukung pemutaran video.
+                </video>
+            @else
+                <p class="text-muted">Belum ada video perkenalan.</p>
+                <a href="{{ route('cv.edit', $cv->id) }}"
+                   class="btn btn-sm btn-outline-primary">
+                    Tambahkan Video
+                </a>
+            @endif
+        </div>
+    </div>
+</div>
+
+<div class="aksi">
+    <a href="{{ route('cv.index') }}" class="btn btn-secondary">
+        Kembali ke Data CV
+    </a>
+
+    <a href="{{ route('cv.edit', $cv->id) }}" class="btn btn-warning">
+        Edit CV
+    </a>
+
+    <button type="button" onclick="window.print()" class="btn btn-primary">
+        Cetak CV / Simpan PDF
+    </button>
 </div>
 
 </body>
